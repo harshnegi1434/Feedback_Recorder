@@ -47,23 +47,23 @@ class Voice_rec():
             t.start()
 
         def stoprecording(self):
-            self.isrecording = False
-            messagebox.showinfo("Success", "Your File Has Been Recorded !")
-            user_inp = simpledialog.askstring(title="Saving", prompt="Save Your Filename As : ")
-            self.filename = user_inp+".wav"
-            wf = wave.open(self.filename, 'wb')
-            wf.setnchannels(self.channels)
-            wf.setsampwidth(self.p.get_sample_size(self.sample_format))
-            wf.setframerate(self.fs)
-            wf.writeframes(b''.join(self.frames))
-            wf.close()
-            messagebox.showinfo("Done", "Your Recording Is Saved !" )
-            #Now The File Will Be Uploaded To Google Drive 
-            headers = {"Authorization": "Bearer ya29.a0AfH6SMAm4nucuchXFEi1BUzp9d7GMtgIi4cr01JNBrxXTM9ETw70ysoX9Sk6UaAXjTIkkYzCoMnyjBbJMfs7eO7FQ89It2dvMWxEHlBlDfrEbtJ0Sj1_bRndLrP0DsSGUg04VobMrj4r-GKIpJvtuSSHP1ylTOU52Gd-UMipGaw"}
-            para = {"name" : self.filename}
-            files = {'data': ('metadata', json.dumps(para), 'application/json; charset=UTF-8'), 'file': open(self.filename, "rb") }
-            r = requests.post("https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart", headers=headers, files=files)
-            messagebox.showinfo("Success !", "Your File Has Been Uploaded To Google Drive!")
+                self.isrecording = False
+                messagebox.showinfo("Success", "Your File Has Been Recorded !")
+                user_inp = simpledialog.askstring(title="Saving", prompt="Save Your Filename As : ")
+                self.filename = f"{user_inp}.wav"
+                wf = wave.open(self.filename, 'wb')
+                wf.setnchannels(self.channels)
+                wf.setsampwidth(self.p.get_sample_size(self.sample_format))
+                wf.setframerate(self.fs)
+                wf.writeframes(b''.join(self.frames))
+                wf.close()
+                messagebox.showinfo("Done", "Your Recording Is Saved !" )
+                #Now The File Will Be Uploaded To Google Drive 
+                headers = {"Authorization": "Bearer ya29.a0AfH6SMAm4nucuchXFEi1BUzp9d7GMtgIi4cr01JNBrxXTM9ETw70ysoX9Sk6UaAXjTIkkYzCoMnyjBbJMfs7eO7FQ89It2dvMWxEHlBlDfrEbtJ0Sj1_bRndLrP0DsSGUg04VobMrj4r-GKIpJvtuSSHP1ylTOU52Gd-UMipGaw"}
+                para = {"name" : self.filename}
+                files = {'data': ('metadata', json.dumps(para), 'application/json; charset=UTF-8'), 'file': open(self.filename, "rb") }
+                r = requests.post("https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart", headers=headers, files=files)
+                messagebox.showinfo("Success !", "Your File Has Been Uploaded To Google Drive!")
 
         def record(self):
                 while self.isrecording:
